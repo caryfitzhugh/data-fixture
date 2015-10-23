@@ -44,7 +44,7 @@
       clip: rect(0, 0, 0, 0);
       border: 0;
     }
-    form.search input[type=search]{
+    form.search input {
       width: 60%;
       height: 34px;
       font: inherit;
@@ -62,6 +62,7 @@
       border: 1px;
       border-radius: 0px 4px 4px 0px;
       padding: 6px 12px;
+      margin: 0px;
     }
     </style>
   </head>
@@ -76,13 +77,12 @@
         <!-- search -->
         <form class="search" action="/catalog" method="get">
           <label for="q" class="sr-only">Find maps, data products, reports, articles...</label>
-          <input type="search" name="q" placeholder="Find maps, data products, reports, articles..." ><button type="submit" id="search"><span>Search</span></button>
+          <input type="text" name="q" placeholder="Find maps, data products, reports, articles..." ><button type="submit" id="search"><span>Search</span></button>
         </form>
       </div>
     </header>
     <div id='root'></div>
   </body>
-  <script src="common.bundle.js" charset="utf8"></script>
-  <script src="loader.js" charset="utf8"></script>
+  <script src="common.bundle.js" charset="utf-8"></script>
+  <script src="loader.js" charset="utf-8"></script>
 </html>
-
