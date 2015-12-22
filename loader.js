@@ -994,4 +994,3 @@ function(t,e){"use strict";function n(t){var e=t.dispatch,n=t.getState;return fu
   !*** ./~/style-loader!./~/css-loader!./~/leaflet/dist/leaflet.css ***!
   \********************************************************************/
 function(t,e,n){var r=n(/*! !./../../css-loader!./leaflet.css */309);"string"==typeof r&&(r=[[t.id,r,""]]);n(/*! ./../../style-loader/addStyles.js */198)(r,{});r.locals&&(t.exports=r.locals)}]);
-//# sourceMappingURL=loader.js.map
