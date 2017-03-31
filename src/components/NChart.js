@@ -218,10 +218,10 @@ export default class AreaChart extends React.Component {
       // add rect for mouse capture on webkit
       svg.append("rect")
         .style("opacity","0")
-        .attr("x",0)
-        .attr("y",0)
-        .attr("width", width-margin.left-margin.right)
-        .attr("height", height-margin.top-margin.bottom);
+        .attr("x",-margin.left)
+        .attr("y",-margin.top)
+        .attr("width", width)
+        .attr("height", height);
 
       svg.append("g")
         .attr("class", styles.axis)
@@ -320,7 +320,7 @@ export default class AreaChart extends React.Component {
           let year = 0;
           if (e.srcElement) { // non-firefox
             if (e.srcElement.nodeName != "text") { // range label
-              year = +x.invert(e.offsetX - margin.left).toFixed(0);
+              year = +x.invert(d3.mouse(e.srcElement)[0]).toFixed(0);
             }
           } else {
             if (e.explicitOriginalTarget && e.target.nodeName != "text") {
@@ -351,6 +351,7 @@ export default class AreaChart extends React.Component {
     if (data.has("rows")) {
       dload = <DownloadForm ref={(c) => this.download = c} title={["year","obs","model_min","model_median","model_max"]} rows={data.get("rows")} />
     }
+
 
     return <div className={styles.chartOutput}>
       <div className={styles.chartBody}>
