@@ -161,9 +161,9 @@ export function fetchResults(key) {
       .then(checkStatus)
       .then(res => res.json());
     } else {
-      const url1 = 'https://s3.amazonaws.com/nyccsc-cache.nrcc.cornell.edu/prism/'+
+      const url1 = 'https://s3.amazonaws.com/nyccsc-cache.nrcc.cornell.edu/vt/prism/'+
         nParam.geom+'/'+nParam.element+'_'+nParam.season,
-        url2 = 'https://s3.amazonaws.com/nyccsc-cache.nrcc.cornell.edu/narccap/'+
+        url2 = 'https://s3.amazonaws.com/nyccsc-cache.nrcc.cornell.edu/vt/narccap/'+
         nParam.geom+'/'+nParam.element+'_'+nParam.season;
 
       const req1 = fetch(url1,{

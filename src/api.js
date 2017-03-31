@@ -5,6 +5,25 @@ export const geoms = new Map([
   ['stn', 'Station'],
 ]);
 
+const queryStates = {
+  ny : {
+    state : 'pa,nj,nh,ma',
+    basin : 'oh,nj,me',
+    county: 'ny'
+  },
+  vt : {
+    state : 'ma,ny,nh',
+    basin : 'ny,nh',
+    county: 'vt'
+  }
+};
+
+let currentState = 'vt';
+
+export function setCurrentState(st) {
+  currentState = st;
+}
+
 export let seasons = new Map([
   ['ANN',{title:'Annual',interval:[1],duration:1,maxmissing:30}],
   ['MAM',{title:'Spring',interval:[1,0],duration:3,maxmissing:10,smonth:5}],
@@ -33,7 +52,7 @@ export let elems = new Map([
     acis: {vX:4, vN:0, reduce:'sum'},
     grid: {vX:94,maxmissing:0},
     gridY: {vX:98,maxmissing:0},
-    gYr: [1895,2016]}],
+    gYr: [1895,2017]}],
   ['snow', {
     label:'Total Snowfall',
     yLabel: 'Snowfall (Inch)', ttUnits: '"',
@@ -49,89 +68,89 @@ export let elems = new Map([
     acis: {vX:1, vN:0, reduce:'mean'},
     grid: {vX:91,maxmissing:0},
     gridY: {vX:95,maxmissing:0},
-    gYr: [1895,2016]}],
+    gYr: [1895,2017]}],
   ['mint', {
     label:'Minimum Temperature',
     yLabel: 'Temperature °F', ttUnits: '°F',
     acis: {vX:2, vN:0, reduce:'mean'},
     grid: {vX:92,maxmissing:0},
     gridY: {vX:96,maxmissing:0},
-    gYr: [1895,2016]}],
+    gYr: [1895,2017]}],
   ['avgt', {
     label:'Average Temperature',
     yLabel: 'Temperature °F', ttUnits: '°F',
     acis: {vX:43, vN:0, reduce:'mean'},
     grid: {vX:99,maxmissing:0},
     gridY: {vX:100,maxmissing:0},
-    gYr: [1895,2016]}],
+    gYr: [1895,2017]}],
   ['gdd50', {
     label:'Growing Degree-Day Accumulation',
     yLabel: 'Degree-Day °F', ttUnits: '°F',
     acis: {vX:44, vN:0, base:50, reduce:'sum'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['hdd65', {
     label:'Heating Degree-Day Accumulation',
     yLabel: 'Degree-Day °F', ttUnits: '°F',
     acis: {vX:45, vN:0, base:65, reduce:'sum'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['cdd65', {
     label:'Cooling Degree-Day Accumulation',
     yLabel: 'Degree-Day °F', ttUnits: '°F',
     acis: {vX:44, vN:0, base:65, reduce:'sum'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
 // StnTDays
   ['tx90', {
     label:'Days with Maximum Temperature Above 90°F',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:1, vN:0, reduce:'cnt_gt_90'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['tx95', {
     label:'Days with Maximum Temperature Above 95°F',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:1, vN:0, reduce:'cnt_gt_95'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['tx100', {
     label:'Days with Maximum Temperature Above 100°F',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:1, vN:0, reduce:'cnt_gt_100'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['tn0', {
     label:'Days with Minimum Temperature Below 0°F',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:2, vN:0, reduce:'cnt_lt_0'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['tn32', {
     label:'Days with Minimum Temperature Below 32°F',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:2, vN:0, reduce:'cnt_lt_32'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
 // StnPDays
   ['pcpn_1', {
     label:'Days with Precipitation > 1"',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:4, vN:0, reduce:'cnt_gt_1'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['pcpn_2', {
     label:'Days with Precipitation > 2"',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:4, vN:0, reduce:'cnt_gt_2'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['pcpn_4', {
     label:'Days with Precipitation > 4"',
     yLabel: 'Days', ttUnits: '',
     acis: {vX:4, vN:0, reduce:'cnt_gt_4'},
     grid: {},
-    gYr: [1981,2016]}],
+    gYr: [1981,2017]}],
   ['snwd_1', {
     label:'Days with Snow Depth > 1"',
     yLabel: 'Days', ttUnits: '',
@@ -161,16 +180,7 @@ export function buildQuery(params, meta) {
     p.sdate = s.smonth ? ['por',s.smonth] : ['por'];
     elem = {...elem, ...e.acis};
   } else {
-    switch (params.geom) {
-      case 'state' :
-        p.state = 'pa,nj,nh,ma';
-        break;
-      case 'basin' :
-        p.state = 'oh,nj,me';
-        break;
-      default :
-        p.state = 'ny';
-    }
+    p.state = queryStates[currentState][params.geom]
     p.grid = 21;
     p.sdate = s.smonth ? [e.gYr[0],s.smonth]: [e.gYr[0]];
     p.edate = s.smonth ? [e.gYr[1],s.smonth]: [e.gYr[1]];
@@ -256,10 +266,10 @@ export function updateSid(param, prevParam, geoms) {
 }
 
 const defaultSids = {
-  stn: "USH00300042",
-  state: "NY",
-  county: "36001",
-  basin: "02020006",
+  stn: "USH00431081",
+  state: "VT",
+  county: "50023",
+  basin: "04150403",
 };
 
 function nearestGeom(nSid, nGeom, pSid, pGeom) {

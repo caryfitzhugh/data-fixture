@@ -11,7 +11,7 @@ import 'leaflet';
 require('style-loader!css-loader!../../node_modules/leaflet/dist/leaflet.css');
 import styles from "./App.css";
 
-const position = [43,-76];
+const position = [43.94,-72.87], zoom=6.5;
 
 export default class MiniMap extends Component {
 
@@ -101,7 +101,7 @@ export default class MiniMap extends Component {
   componentDidMount() {
     this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
     center: position,
-    zoom: 5.6
+    zoom: zoom
     });
     L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
       {subdomains: 'abcd', minZoom: 5.6, maxZoom: 10, opacity: 0.3}).addTo(this.map);
