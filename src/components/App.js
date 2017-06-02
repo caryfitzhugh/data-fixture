@@ -78,6 +78,10 @@ export default class App extends Component {
     });
     return (
       <div>
+        <header>
+          <img src='data/images/vt-data-grapher-logo.png'/>
+          <hr/>
+        </header>
         {charts}
         <Modal
           closeTimeoutMS={150}
@@ -91,4 +95,3 @@ export default class App extends Component {
       );
   }
 }
-
