@@ -80,7 +80,6 @@ export default class App extends Component {
       <div>
         <header>
           <img src='data/images/vt-data-grapher-logo.png'/>
-          <hr/>
         </header>
         {charts}
         <Modal

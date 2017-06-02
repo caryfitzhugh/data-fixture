@@ -338,5 +338,3 @@ chartDefs.forEach((def,chart) => {
     return [p.chart,p.geom,p.element,p.season,p.sid,p.bbox].join('/');
   };
 });
-
-
